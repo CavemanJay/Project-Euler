@@ -9,3 +9,7 @@ let multiples limit ([<ParamArray>] vals: int seq) =
             for num in vals do
                 if i % num = 0 then yield i
     }
+
+/// Fibonacci sequence
+let fib () =
+    Seq.unfold (fun (a, b) -> Some(a + b, (b, a + b))) (0, 1)
