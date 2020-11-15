@@ -1,4 +1,4 @@
-﻿// Learn more about F# at http://fsharp.org
+// Learn more about F# at http://fsharp.org
 
 open System
 open Models
@@ -23,7 +23,10 @@ let problem2 () =
 let problem3 () =
     let target = 600851475143L
 
-    target |> factors |> Seq.filter isPrime |> Seq.max
+    target
+    |> factorsBelowSqrt
+    |> Seq.filter isPrime
+    |> Seq.max
 
 let problem4 () =
     let generateProducts limit bottom =

@@ -34,7 +34,7 @@ let isPrime (n: int64) =
 let isDivisible a b = a % b = 0L
 
 /// Yields the factors of a number
-let factors (n: int64) =
+let factorsBelowSqrt (n: int64) =
     let limit = n |> float |> Math.Sqrt |> int64
 
     [ 1L .. limit ] |> Seq.filter (isDivisible n)
