@@ -130,7 +130,18 @@ let problem12 () =
     |> Seq.find (fun i -> (i |> int64 |> factors |> List.ofSeq).Length > 500)
 
 
+let problem13 () =
+    getResource "Problem 13.txt"
+    |> fun str -> str.Split()
+    |> Seq.filter (fun i -> i <> "")
+    |> Seq.map (fun i -> bigint.Parse i)
+    |> Seq.sum
+    |> string
+    |> fun str -> str.[0..9]
+
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem12 ()
+    printfn "%A" <| problem13 ()
     0 // return an integer exit code

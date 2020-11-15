@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Problem 13.txt" />
     <EmbeddedResource Include="Resources\Problem 8.txt" />
     <Compile Include="Models.fs" />
     <Compile Include="Operators.fs" />
