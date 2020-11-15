@@ -161,7 +161,24 @@ let problem20 () =
     |> sumOfDigits
 
 
+let problem21 () =
+    let d n =
+        factors n
+        |> Seq.filter (fun i -> i <> n)
+        |> Seq.sum
+
+    let range = [ 2L .. 9999L ]
+    let mutable pairs = [] |> seq
+
+    for a in range do
+        let da = d a
+        let db = d da
+        if a = db && a <> da then pairs <- Seq.append pairs [ da; db ]
+
+    pairs |> set |> Seq.sum
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem20 ()
+    printfn "%A" <| problem21 ()
     0 // return an integer exit code
