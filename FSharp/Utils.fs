@@ -80,6 +80,16 @@ let generateNPrimes n =
 let nthTriangularNumber n = [ 1 .. n ] |> List.sum
 
 
+/// Calculates the number of links in the collatz chain with n as the starting point
+let rec collatz (n: int64) =
+    if n = 1L then
+        1
+    else
+        match n % 2L with
+        | 0L -> 1 + collatz (n / 2L)
+        | 1L -> 1 + collatz (3L * n + 1L)
+
+
 let getResource fileName =
     let assembly = Assembly.GetExecutingAssembly()
 

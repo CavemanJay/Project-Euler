@@ -140,8 +140,14 @@ let problem13 () =
     |> fun str -> str.[0..9]
 
 
+let problem14 () =
+    [ 1L .. 1000000L ]
+    |> Seq.map (fun i -> (i, collatz i))
+    |> Seq.maxBy (fun (_, chainCount) -> chainCount)
+    |> fun (start, chainCount) -> start
+
 
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem13 ()
+    printfn "%A" <| problem14 ()
     0 // return an integer exit code
