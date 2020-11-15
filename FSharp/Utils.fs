@@ -13,3 +13,35 @@ let multiples limit ([<ParamArray>] vals: int seq) =
 /// Fibonacci sequence
 let fib () =
     Seq.unfold (fun (a, b) -> Some(a + b, (b, a + b))) (0, 1)
+
+/// Tests whether a number is prime
+let isPrime (n: int64) =
+    let limit =
+        lazy (Math.Sqrt(float n) |> Math.Ceiling |> int64)
+
+    match n with
+    | 1L -> false
+    | 2L -> true
+    | x ->
+        if x % 2L = 0L then
+            false
+        else
+            [ 2L .. limit.Value ]
+            |> Seq.forall (fun i -> n % i <> 0L)
+
+/// Yields the factors of a number
+let factors (n: int64) =
+    let limit = n |> float |> Math.Sqrt |> int64
+
+    [ 1L .. limit ]
+    |> Seq.filter (fun i -> n % i = 0L)
+
+let reverse (str: string) =
+    str
+    |> Seq.toList
+    |> List.rev
+    |> List.map (fun c -> c |> string)
+    |> Seq.ofList
+    |> String.concat ""
+
+let isPalindrome (n: int) = n |> string = (n |> string |> reverse)
