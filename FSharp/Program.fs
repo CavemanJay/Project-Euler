@@ -134,7 +134,7 @@ let problem13 () =
     getResource "Problem 13.txt"
     |> fun str -> str.Split()
     |> Seq.filter (fun i -> i <> "")
-    |> Seq.map (fun i -> bigint.Parse i)
+    |> Seq.map (bigint.Parse)
     |> Seq.sum
     |> string
     |> fun str -> str.[0..9]
@@ -147,7 +147,15 @@ let problem14 () =
     |> fun (start, chainCount) -> start
 
 
+let problem16 () =
+    bigint.Pow(bigint.Parse("2"), 1000)
+    |> string
+    |> Seq.map (string)
+    |> Seq.map (int)
+    |> Seq.sum
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem14 ()
+    printfn "%A" <| problem16 ()
     0 // return an integer exit code
