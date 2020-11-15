@@ -1,6 +1,8 @@
 module Utils
 
 open System
+open System.IO
+open System.Reflection
 
 /// Returns the multiples of the specified vals below the limit
 let multiples limit ([<ParamArray>] vals: int seq) =
@@ -29,12 +31,13 @@ let isPrime (n: int64) =
             [ 2L .. limit.Value ]
             |> Seq.forall (fun i -> n % i <> 0L)
 
+let isDivisible a b = a % b = 0L
+
 /// Yields the factors of a number
 let factors (n: int64) =
     let limit = n |> float |> Math.Sqrt |> int64
 
-    [ 1L .. limit ]
-    |> Seq.filter (fun i -> n % i = 0L)
+    [ 1L .. limit ] |> Seq.filter (isDivisible n)
 
 let reverse (str: string) =
     str
@@ -45,3 +48,13 @@ let reverse (str: string) =
     |> String.concat ""
 
 let isPalindrome (n: int) = n |> string = (n |> string |> reverse)
+
+let getResource fileName =
+    let assembly = Assembly.GetExecutingAssembly()
+
+
+    let fqn = sprintf "FSharp.Resources.%s" fileName
+    use resourceStream = assembly.GetManifestResourceStream(fqn)
+
+    use reader = new StreamReader(resourceStream)
+    reader.ReadToEnd()
