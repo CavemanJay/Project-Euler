@@ -33,11 +33,18 @@ let isPrime (n: int64) =
 
 let isDivisible a b = a % b = 0L
 
-/// Yields the factors of a number
-let factorsBelowSqrt (n: int64) =
-    let limit = n |> float |> Math.Sqrt |> int64
 
-    [ 1L .. limit ] |> Seq.filter (isDivisible n)
+// Converted from the python algorithm at: https://stackoverflow.com/a/19578818
+let factors (n: int64) =
+    let step = if n % 2L = 1L then 2L else 1L
+
+    seq {
+        for i in [ 1L .. step .. (Math.Sqrt(n |> float) |> int64) + 1L ] do
+            if n % i = 0L then yield [ i; n / i ]
+    }
+    |> Set.ofSeq
+    |> Seq.concat
+
 
 let reverse (str: string) =
     str
@@ -54,6 +61,7 @@ let isPythagoreanTriplet (a: int) (b: int) (c: int) =
     (Math.Pow(a |> float, 2.0) |> int)
     + (Math.Pow(b |> float, 2.0) |> int) = (Math.Pow(c |> float, 2.0) |> int)
 
+
 let generateNPrimes n =
     seq {
         let mutable count = 0
@@ -67,6 +75,9 @@ let generateNPrimes n =
 
             i <- i + 1L
     }
+
+
+let nthTriangularNumber n = [ 1 .. n ] |> List.sum
 
 
 let getResource fileName =

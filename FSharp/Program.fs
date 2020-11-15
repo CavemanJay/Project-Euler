@@ -1,4 +1,4 @@
-// Learn more about F# at http://fsharp.org
+﻿// Learn more about F# at http://fsharp.org
 
 open System
 open Models
@@ -23,10 +23,7 @@ let problem2 () =
 let problem3 () =
     let target = 600851475143L
 
-    target
-    |> factorsBelowSqrt
-    |> Seq.filter isPrime
-    |> Seq.max
+    target |> factors |> Seq.filter isPrime |> Seq.max
 
 let problem4 () =
     let generateProducts limit bottom =
@@ -127,7 +124,13 @@ let problem10 () =
     |> Seq.sum
 
 
+let problem12 () =
+    Seq.initInfinite (fun i -> nthTriangularNumber i)
+    |> Seq.tail
+    |> Seq.find (fun i -> (i |> int64 |> factors |> List.ofSeq).Length > 500)
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem10 ()
+    printfn "%A" <| problem12 ()
     0 // return an integer exit code
