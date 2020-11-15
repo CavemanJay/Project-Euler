@@ -117,7 +117,22 @@ let problem8 () =
     |> getProducts 13
     |> Seq.maxBy (fun (_, product) -> product)
 
+
+let problem9 () =
+    let limit = 1000000
+
+    seq {
+        for c = 5 to limit do
+            for b = 1 to c do
+                for a = 1 to b do
+                    if a + b + c = 1000 && isPythagoreanTriplet a b c
+                    then ([ a; b; c ], a * b * c)
+    }
+    |> Seq.take 1
+    |> Seq.head
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem8 ()
+    printfn "%A" <| problem9 ()
     0 // return an integer exit code

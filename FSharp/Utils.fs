@@ -49,6 +49,10 @@ let reverse (str: string) =
 
 let isPalindrome (n: int) = n |> string = (n |> string |> reverse)
 
+let isPythagoreanTriplet (a: int) (b: int) (c: int) =
+    (Math.Pow(a |> float, 2.0) |> int)
+    + (Math.Pow(b |> float, 2.0) |> int) = (Math.Pow(c |> float, 2.0) |> int)
+
 let getResource fileName =
     let assembly = Assembly.GetExecutingAssembly()
 
