@@ -47,11 +47,27 @@ let reverse (str: string) =
     |> Seq.ofList
     |> String.concat ""
 
+
 let isPalindrome (n: int) = n |> string = (n |> string |> reverse)
 
 let isPythagoreanTriplet (a: int) (b: int) (c: int) =
     (Math.Pow(a |> float, 2.0) |> int)
     + (Math.Pow(b |> float, 2.0) |> int) = (Math.Pow(c |> float, 2.0) |> int)
+
+let generateNPrimes n =
+    seq {
+        let mutable count = 0
+
+        let mutable i = 2L
+
+        while count <= n do
+            if i |> int64 |> isPrime then
+                count <- count + 1
+                yield i
+
+            i <- i + 1L
+    }
+
 
 let getResource fileName =
     let assembly = Assembly.GetExecutingAssembly()

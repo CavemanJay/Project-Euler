@@ -75,20 +75,6 @@ let problem6 () =
     squareOfSum range - sumOfSquares range
 
 let problem7 () =
-    let generateNPrimes limit =
-        seq {
-            let mutable count = 0
-
-            let mutable i = 2
-
-            while count <= limit do
-                if i |> int64 |> isPrime then
-                    count <- count + 1
-                    yield i
-
-                i <- i + 1
-        }
-
     generateNPrimes 100000000 |> Seq.item 10000
 
 
@@ -132,7 +118,13 @@ let problem9 () =
     |> Seq.head
 
 
+let problem10 () =
+    generateNPrimes 1000000000
+    |> Seq.takeWhile (fun i -> i < 2000000L)
+    |> Seq.sum
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem9 ()
+    printfn "%A" <| problem10 ()
     0 // return an integer exit code
