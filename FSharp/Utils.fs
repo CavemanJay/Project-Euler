@@ -90,6 +90,13 @@ let rec collatz (n: int64) =
         | 1L -> 1 + collatz (3L * n + 1L)
 
 
+let rec factorial (n: bigint) =
+    if n = bigint.Zero then bigint.One else n * factorial (n - bigint.One)
+
+
+let sumOfDigits (n: string) =
+    n |> Seq.map (string) |> Seq.map (int) |> Seq.sum
+
 let getResource fileName =
     let assembly = Assembly.GetExecutingAssembly()
 

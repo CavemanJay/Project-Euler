@@ -150,12 +150,18 @@ let problem14 () =
 let problem16 () =
     bigint.Pow(bigint.Parse("2"), 1000)
     |> string
-    |> Seq.map (string)
-    |> Seq.map (int)
-    |> Seq.sum
+    |> sumOfDigits
+
+
+let problem20 () =
+    100
+    |> bigint
+    |> factorial
+    |> string
+    |> sumOfDigits
 
 
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem16 ()
+    printfn "%A" <| problem20 ()
     0 // return an integer exit code
