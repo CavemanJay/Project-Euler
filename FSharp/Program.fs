@@ -240,7 +240,20 @@ let problem25 () =
     |> (+) 2
 
 
+let problem29 () =
+    let range = [ 2 .. 100 ]
+
+    seq {
+        for a in range do
+            for b in range do
+                yield bigint.Pow(bigint a, b)
+    }
+    |> Seq.distinct
+    |> Seq.sort
+    |> Seq.length
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem25 ()
+    printfn "%A" <| problem29 ()
     0 // return an integer exit code
