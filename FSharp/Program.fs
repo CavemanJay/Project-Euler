@@ -267,7 +267,23 @@ let problem30 () =
     |> Seq.map int64
     |> Seq.sum
 
+
+let problem34 () =
+    let sumOfFactorialDigits n =
+        getDigits n
+        |> Seq.map bigint
+        |> Seq.map factorial
+        |> Seq.sum
+
+    Seq.initInfinite (fun i -> i + 3)
+    |> Seq.map bigint
+    |> Seq.filter (fun i -> i |> string |> sumOfFactorialDigits = i)
+    |> Seq.take 2
+    |> Seq.sum
+
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem30 ()
+    printfn "%A" <| problem34 ()
     0 // return an integer exit code
