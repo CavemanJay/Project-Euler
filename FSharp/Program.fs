@@ -1,4 +1,4 @@
-﻿// Learn more about F# at http://fsharp.org
+// Learn more about F# at http://fsharp.org
 
 open System
 open Models
@@ -190,8 +190,28 @@ let problem22 () =
     |> Seq.mapi (fun index name -> getScore name index)
     |> Seq.sum
 
+let problem24 () =
+    // https://stackoverflow.com/a/2184129
+    let rec insertions x =
+        function
+        | [] -> [ [ x ] ]
+        | (y :: ys) as l ->
+            (x :: l)
+            :: (List.map (fun x -> y :: x) (insertions x ys))
+
+    let rec permutations =
+        function
+        | [] -> seq [ [] ]
+        | x :: xs -> Seq.concat (Seq.map (insertions x) (permutations xs))
+
+    "0123456789"
+    |> List.ofSeq
+    |> permutations
+    |> Seq.map (fun i -> i |> Seq.map string |> String.concat "")
+    |> Seq.sort
+    |> Seq.item 999999
 
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem22 ()
+    printfn "%A" <| problem24 ()
     0 // return an integer exit code
