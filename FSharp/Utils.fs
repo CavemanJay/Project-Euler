@@ -14,7 +14,7 @@ let multiples limit ([<ParamArray>] vals: int seq) =
 
 /// Fibonacci sequence
 let fib () =
-    Seq.unfold (fun (a, b) -> Some(a + b, (b, a + b))) (0, 1)
+    Seq.unfold (fun (a, b) -> Some(a + b, (b, a + b))) (bigint.Zero, bigint.One)
 
 /// Tests whether a number is prime
 let isPrime (n: int64) =

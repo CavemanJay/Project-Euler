@@ -16,8 +16,8 @@ let problem1 () =
 let problem2 () =
     ()
     |> fib
-    |> Seq.takeWhile (fun i -> i < 4000000)
-    |> Seq.filter (fun i -> i % 2 = 0)
+    |> Seq.takeWhile (fun i -> i < bigint 4000000)
+    |> Seq.filter (fun i -> i % bigint 2 = bigint.Zero)
     |> Seq.sum
 
 let problem3 () =
@@ -231,7 +231,16 @@ let problem24 () =
     |> Seq.sort
     |> Seq.item 999999
 
+let problem25 () =
+    let digitCount n = n |> string |> String.length
+
+    ()
+    |> fib
+    |> Seq.findIndex (fun i -> digitCount i = 1000)
+    |> (+) 2
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem24 ()
+    printfn "%A" <| problem25 ()
     0 // return an integer exit code
