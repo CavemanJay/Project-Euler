@@ -294,7 +294,24 @@ let problem36 () =
     |> Seq.sum
 
 
+let problem37 () =
+    let isTruncatablePrime p =
+        truncatations p true
+        |> Seq.map int64
+        |> Seq.forall isPrime
+        && truncatations p false
+           |> Seq.map int64
+           |> Seq.forall isPrime
+
+    Seq.initInfinite (fun i -> i + 10)
+    |> Seq.filter isTruncatablePrime
+    |> Seq.take 11
+    //|> List.ofSeq
+    |> Seq.sum
+
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem36 ()
+    printfn "%A" <| problem37 ()
     0 // return an integer exit code

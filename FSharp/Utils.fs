@@ -122,6 +122,40 @@ let permutations list =
 
     permute list
 
+let truncatations num ltr =
+    let cutLeft n =
+        n
+        |> string
+        |> getDigits
+        |> Seq.tail
+        |> Seq.map string
+        |> String.concat ""
+        |> int
+
+    let cutRight n =
+        n
+        |> string
+        |> getDigits
+        |> Seq.map string
+        |> String.concat ""
+        |> int
+        |> fun i -> i / 10
+
+    seq {
+        yield num
+
+        let mutable count = 1
+        let mutable n = num
+
+        while count < num.ToString().Length do
+            match n with
+            | _ when n < 10 -> ()
+            | _ when ltr -> n <- cutLeft n
+            | _ -> n <- cutRight n
+
+            count <- count + 1
+            yield n
+    }
 
 let circularPermutations (str: string) =
     let digitCount = str.Length
