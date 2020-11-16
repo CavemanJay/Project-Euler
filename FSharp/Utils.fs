@@ -105,6 +105,43 @@ let getDigits (n: string) =
 
 let sumOfDigits (n: string) = n |> getDigits |> Seq.sum
 
+let permutations list =
+    // https://stackoverflow.com/a/2184129
+    let rec insertions x =
+        function
+        | [] -> [ [ x ] ]
+        | (y :: ys) as l ->
+            (x :: l)
+            :: (List.map (fun x -> y :: x) (insertions x ys))
+
+    let rec permute =
+        function
+        | [] -> seq [ [] ]
+        | x :: xs -> Seq.concat (Seq.map (insertions x) (permute xs))
+
+    permute list
+
+
+let circularPermutations (str: string) =
+    let digitCount = str.Length
+
+    let powered =
+        Math.Pow(10.0, float digitCount - 1.0) |> int64
+
+    let mutable num = int64 str
+
+    seq {
+        for i = 0 to digitCount - 1 do
+            let leftMost = num / powered
+
+            let rotation =
+                ((num * 10L) + leftMost)
+                - (leftMost * powered * 10L)
+
+            yield rotation
+            num <- rotation
+    }
+
 let getResource fileName =
     let assembly = Assembly.GetExecutingAssembly()
 

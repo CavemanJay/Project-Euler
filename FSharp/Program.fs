@@ -211,18 +211,6 @@ type Designation =
 
 
 let problem24 () =
-    // https://stackoverflow.com/a/2184129
-    let rec insertions x =
-        function
-        | [] -> [ [ x ] ]
-        | (y :: ys) as l ->
-            (x :: l)
-            :: (List.map (fun x -> y :: x) (insertions x ys))
-
-    let rec permutations =
-        function
-        | [] -> seq [ [] ]
-        | x :: xs -> Seq.concat (Seq.map (insertions x) (permutations xs))
 
     "0123456789"
     |> List.ofSeq
@@ -282,8 +270,16 @@ let problem34 () =
     |> Seq.sum
 
 
+let problem35 () =
+    let isCircularPrime n =
+        circularPermutations n |> Seq.forall isPrime
+
+    [ 1 .. 1000000 ]
+    |> Seq.map string
+    |> Seq.filter isCircularPrime
+    |> Seq.length
 
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem34 ()
+    printfn "%A" <| problem35 ()
     0 // return an integer exit code
