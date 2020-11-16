@@ -45,6 +45,8 @@ let factors (n: int64) =
     |> Set.ofSeq
     |> Seq.concat
 
+let properDivisors n =
+    factors n |> Seq.filter (fun i -> i <> n)
 
 let reverse (str: string) =
     str

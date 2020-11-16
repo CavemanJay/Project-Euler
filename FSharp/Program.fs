@@ -1,4 +1,4 @@
-// Learn more about F# at http://fsharp.org
+﻿// Learn more about F# at http://fsharp.org
 
 open System
 open Models
@@ -162,10 +162,7 @@ let problem20 () =
 
 
 let problem21 () =
-    let d n =
-        factors n
-        |> Seq.filter (fun i -> i <> n)
-        |> Seq.sum
+    let d n = properDivisors n |> Seq.sum
 
     let range = [ 2L .. 9999L ]
     let mutable pairs = [] |> seq
@@ -189,6 +186,29 @@ let problem22 () =
     |> Seq.sort
     |> Seq.mapi (fun index name -> getScore name index)
     |> Seq.sum
+
+type Designation =
+    | Deficient of int64
+    | Abundant of int64
+    | Perfect of int64
+
+//let problem23 () =
+//    let getDesignation n =
+//        match properDivisors n |> Seq.sum with
+//        | i when i > n -> Abundant n
+//        | i when i < n -> Deficient n
+//        | i -> Perfect n
+
+//    let canBeWritten n =
+//        let range = [ 1 .. n - 1 ]
+
+//        for i in range do
+//            ()
+
+//    [ 1L .. 28123L ]
+//    |> Seq.map getDesignation
+//    |> Seq.choose (function | )
+
 
 let problem24 () =
     // https://stackoverflow.com/a/2184129
