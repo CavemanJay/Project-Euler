@@ -11,5 +11,7 @@
     <Compile Include="Utils.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Problem 22.txt" />
+  </ItemGroup>
 </Project>

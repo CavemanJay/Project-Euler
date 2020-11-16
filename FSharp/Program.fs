@@ -178,7 +178,20 @@ let problem21 () =
     pairs |> set |> Seq.sum
 
 
+let problem22 () =
+    let getScore (name: string) index =
+        (name |> Seq.map (fun c -> (int c) - 64) |> Seq.sum)
+        * (index + 1)
+
+    getResource "Problem 22.txt"
+    |> fun str -> str.Split(',')
+    |> Seq.map (fun str -> str.Replace("\"", ""))
+    |> Seq.sort
+    |> Seq.mapi (fun index name -> getScore name index)
+    |> Seq.sum
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem21 ()
+    printfn "%A" <| problem22 ()
     0 // return an integer exit code
