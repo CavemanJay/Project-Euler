@@ -37,6 +37,7 @@ let problem4 () =
 
     100
     |> generateProducts 999
+    |> Seq.map bigint
     |> Seq.filter isPalindrome
     |> Seq.max
 
@@ -279,7 +280,21 @@ let problem35 () =
     |> Seq.filter isCircularPrime
     |> Seq.length
 
+
+// Not working
+let problem36 () =
+    [ 1 .. 999999 ]
+    |> Seq.map bigint
+    |> Seq.filter isPalindrome
+    |> Seq.map int64
+    |> Seq.map (fun i -> Convert.ToString(i, 2))
+    |> Seq.map bigint.Parse
+    |> Seq.filter isPalindrome
+    |> Seq.map (fun i -> Convert.ToInt32(i.ToString(), 2))
+    |> Seq.sum
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem35 ()
+    printfn "%A" <| problem36 ()
     0 // return an integer exit code

@@ -57,7 +57,8 @@ let reverse (str: string) =
     |> String.concat ""
 
 
-let isPalindrome (n: int) = n |> string = (n |> string |> reverse)
+//let isPalindrome (n: int64) = n |> string = (n |> string |> reverse)
+let isPalindrome (n: bigint) = n |> string = (n |> string |> reverse)
 
 let isPythagoreanTriplet (a: int) (b: int) (c: int) =
     (Math.Pow(a |> float, 2.0) |> int)
