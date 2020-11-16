@@ -306,12 +306,26 @@ let problem37 () =
     Seq.initInfinite (fun i -> i + 10)
     |> Seq.filter isTruncatablePrime
     |> Seq.take 11
-    //|> List.ofSeq
     |> Seq.sum
 
 
+let problem40 () =
+    let limit = 1000001
+
+    let decimal =
+        Seq.initInfinite (fun i -> i + 1)
+        |> Seq.takeWhile (fun i -> i < limit)
+        |> Seq.map string
+        |> String.concat ""
+
+    let d n = decimal.[n - 1] |> string |> int
+
+    Seq.initInfinite (fun i -> Math.Pow(10.0, float i) |> int)
+    |> Seq.take 7
+    |> Seq.map d
+    |> Seq.reduce (fun acc elem -> acc * elem)
 
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem37 ()
+    printfn "%A" <| problem40 ()
     0 // return an integer exit code
