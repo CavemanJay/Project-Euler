@@ -253,7 +253,21 @@ let problem29 () =
     |> Seq.length
 
 
+let problem30 () =
+    let poweredSum pow digits =
+        digits
+        |> Seq.map (fun i -> Math.Pow(float i, float pow))
+        |> Seq.map int64
+        |> Seq.sum
+
+    Seq.initInfinite (fun i -> i + 2)
+    |> Seq.map string
+    |> Seq.filter (fun i -> i |> getDigits |> poweredSum 5 = int64 i)
+    |> Seq.take 6
+    |> Seq.map int64
+    |> Seq.sum
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem29 ()
+    printfn "%A" <| problem30 ()
     0 // return an integer exit code

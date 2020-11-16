@@ -96,8 +96,14 @@ let rec factorial (n: bigint) =
     if n = bigint.Zero then bigint.One else n * factorial (n - bigint.One)
 
 
-let sumOfDigits (n: string) =
-    n |> Seq.map (string) |> Seq.map (int) |> Seq.sum
+/// Returns a list of the integer digits in a number
+let getDigits (n: string) =
+    n
+    |> Seq.map (string)
+    |> Seq.map (int)
+    |> List.ofSeq
+
+let sumOfDigits (n: string) = n |> getDigits |> Seq.sum
 
 let getResource fileName =
     let assembly = Assembly.GetExecutingAssembly()
