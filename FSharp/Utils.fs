@@ -79,6 +79,11 @@ let generateNPrimes n =
             i <- i + 1L
     }
 
+let primes =
+    Seq.initInfinite (fun i -> i)
+    |> Seq.map int64
+    |> Seq.filter isPrime
+
 
 let nthTriangularNumber n = [ 1 .. n ] |> List.sum
 

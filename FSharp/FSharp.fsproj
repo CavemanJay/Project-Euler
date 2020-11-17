@@ -12,6 +12,9 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Problem 42.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Resources\Problem 22.txt" />
   </ItemGroup>
 </Project>

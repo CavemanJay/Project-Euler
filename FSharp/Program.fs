@@ -1,4 +1,4 @@
-﻿// Learn more about F# at http://fsharp.org
+// Learn more about F# at http://fsharp.org
 
 open System
 open Models
@@ -325,7 +325,24 @@ let problem40 () =
     |> Seq.map d
     |> Seq.reduce (fun acc elem -> acc * elem)
 
+let problem42 () =
+    let getScore (name: string) =
+        (name |> Seq.map (fun c -> (int c) - 64) |> Seq.sum)
+
+    let triangles =
+        [ 1 .. 100 ] |> Seq.map nthTriangularNumber
+
+    let words =
+        getResource "Problem 42.txt"
+        |> fun str -> str.Split(',')
+        |> Seq.map (fun str -> str.Replace("\"", ""))
+
+    words
+    |> Seq.map getScore
+    |> Seq.filter (fun score -> triangles |> Seq.contains score)
+    |> Seq.length
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem40 ()
+    printfn "%A" <| problem42 ()
     0 // return an integer exit code
