@@ -342,7 +342,17 @@ let problem42 () =
     |> Seq.filter (fun score -> triangles |> Seq.contains score)
     |> Seq.length
 
+let problem48 () =
+    ()
+
+    [ 1 .. 1000 ]
+    |> Seq.map (fun i -> bigint.Pow(bigint i, i))
+    |> Seq.sum
+    |> string
+    |> fun i -> i.[i.Length - 10..i.Length - 1]
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem42 ()
+    printfn "%A" <| problem48 ()
     0 // return an integer exit code
