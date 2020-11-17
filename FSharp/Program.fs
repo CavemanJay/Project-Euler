@@ -351,8 +351,39 @@ let problem48 () =
     |> string
     |> fun i -> i.[i.Length - 10..i.Length - 1]
 
+let problem49 () =
+    let getChain n =
+        seq {
+            let mutable num = n
+            yield num
+
+            while num < 10000 do
+                num <- num + 3330
+                if num < 10000 then yield num
+        }
+
+    let checkChain (chain: int seq) =
+        chain |> Seq.length = 3
+        && chain |> Seq.map int64 |> Seq.forall isPrime
+        && chain
+           |> Seq.map string
+           |> Seq.map getDigits
+           |> Seq.map List.ofSeq
+           |> Seq.map List.sort
+           |> List.ofSeq
+           |> List.distinct
+           |> fun list -> list.Length = 1
+
+
+
+    [ 1000 .. 9999 ]
+    |> Seq.map getChain
+    |> Seq.filter checkChain
+    |> Seq.last
+    |> Seq.map string
+    |> String.concat ""
 
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem48 ()
+    printfn "%A" <| problem49 ()
     0 // return an integer exit code
