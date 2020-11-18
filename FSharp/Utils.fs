@@ -191,3 +191,13 @@ let getResource fileName =
 
     use reader = new StreamReader(resourceStream)
     reader.ReadToEnd()
+
+let arePermutations (chain: int seq) =
+    chain
+    |> Seq.map string
+    |> Seq.map getDigits
+    |> Seq.map List.ofSeq
+    |> Seq.map List.sort
+    |> List.ofSeq
+    |> List.distinct
+    |> fun list -> list.Length = 1

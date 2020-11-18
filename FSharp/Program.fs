@@ -1,5 +1,3 @@
-// Learn more about F# at http://fsharp.org
-
 open System
 open Models
 open Utils
@@ -96,9 +94,7 @@ let problem8 () =
         }
 
     let number =
-        (getResource "Problem 8.txt")
-            .Replace("\n", "")
-            .Replace("\r", "")
+        (getResource "Problem 8.txt").Replace("\n", "").Replace("\r", "")
 
     number
     |> getProducts 13
@@ -343,8 +339,6 @@ let problem42 () =
     |> Seq.length
 
 let problem48 () =
-    ()
-
     [ 1 .. 1000 ]
     |> Seq.map (fun i -> bigint.Pow(bigint i, i))
     |> Seq.sum
@@ -363,17 +357,10 @@ let problem49 () =
         }
 
     let checkChain (chain: int seq) =
-        chain |> Seq.length = 3
+        chain
+        |> Seq.length = 3
         && chain |> Seq.map int64 |> Seq.forall isPrime
-        && chain
-           |> Seq.map string
-           |> Seq.map getDigits
-           |> Seq.map List.ofSeq
-           |> Seq.map List.sort
-           |> List.ofSeq
-           |> List.distinct
-           |> fun list -> list.Length = 1
-
+        && chain |> arePermutations
 
 
     [ 1000 .. 9999 ]
@@ -383,7 +370,17 @@ let problem49 () =
     |> Seq.map string
     |> String.concat ""
 
+
+let problem52 () =
+    let getChain n = [ 1; 2; 3; 4; 5; 6 ] |> Seq.map ((*) n)
+    Seq.initInfinite (fun i -> i + 1)
+    |> Seq.map getChain
+    |> Seq.filter arePermutations
+    |> Seq.head
+    |> Seq.head
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem49 ()
+    printfn "%A" <| problem52 ()
     0 // return an integer exit code

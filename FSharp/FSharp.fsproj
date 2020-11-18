@@ -6,15 +6,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Problem 13.txt" />
     <EmbeddedResource Include="Resources\Problem 8.txt" />
+    <EmbeddedResource Include="Resources\Problem 42.txt" />
+    <EmbeddedResource Include="Resources\Problem 22.txt" />
     <Compile Include="Models.fs" />
     <Compile Include="Operators.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="Program.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Problem 42.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Problem 22.txt" />
   </ItemGroup>
 </Project>
