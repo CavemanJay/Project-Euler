@@ -387,7 +387,21 @@ let problem53 () =
     }
     |> Seq.length
 
+
+let problem56 () =
+    let digitalSum (n: bigint) = n |> string |> getDigits |> Seq.sum
+
+    seq {
+        let range = [ 1 .. 100 ]
+        for a in range do
+            for b in range do
+                yield bigint.Pow(bigint a, b)
+    }
+    |> Seq.map digitalSum
+    |> Seq.max
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem53 ()
+    printfn "%A" <| problem56 ()
     0 // return an integer exit code
