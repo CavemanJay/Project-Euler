@@ -201,3 +201,7 @@ let arePermutations (chain: int seq) =
     |> List.ofSeq
     |> List.distinct
     |> fun list -> list.Length = 1
+
+let choose n r =
+    (factorial n)
+    / ((factorial r) * (factorial (n - r)))

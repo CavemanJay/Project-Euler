@@ -379,8 +379,15 @@ let problem52 () =
     |> Seq.head
     |> Seq.head
 
+let problem53 () =
+    seq {
+        for n in [ 1 .. 100 ] |> Seq.map bigint do
+            for r in [ bigint 1 .. n ] do
+                if choose n r > bigint 1000000 then n
+    }
+    |> Seq.length
 
 [<EntryPoint>]
 let main argv =
-    printfn "%A" <| problem52 ()
+    printfn "%A" <| problem53 ()
     0 // return an integer exit code
