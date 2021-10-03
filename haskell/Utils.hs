@@ -1,6 +1,7 @@
 module Utils where
 
 import Data.Bits
+import Data.Char (digitToInt)
 import Data.List
 import Data.Maybe
 
@@ -44,3 +45,5 @@ factor n (p : ps)
   | p * p > n = [n]
   | n `mod` p == 0 = p : factor (n `div` p) (p : ps)
   | otherwise = factor n ps
+
+digitProduct = product . map digitToInt

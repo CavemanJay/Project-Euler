@@ -1,7 +1,14 @@
 {-# LANGUAGE NumericUnderscores #-}
 
-import Data.List
+import Data.List (union)
 import Utils
+  ( digitProduct,
+    fibs,
+    isPalindrome,
+    primeFactors,
+    primeFactors',
+    primes,
+  )
 
 problem1 = print $ sum $ filter multiple3or5 [1 .. 999]
   where
@@ -31,6 +38,12 @@ problem6 = print $ squareOfSum - sumOfSquares
     squareOfSum = sum [1 .. limit] ^ 2
 
 problem7 = print $ primes !! 10_000
+
+problem10 = print $ sum $ takeWhile (< 2_000_000) primes
+
+problem13 = do
+  str <- readFile "problem13.txt"
+  print $ take 10 $ show $ sum $ map (read :: String -> Integer) $ lines str
 
 main :: IO ()
 main = problem7
