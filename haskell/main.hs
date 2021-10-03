@@ -1,0 +1,36 @@
+{-# LANGUAGE NumericUnderscores #-}
+
+import Data.List
+import Utils
+
+problem1 = print $ sum $ filter multiple3or5 [1 .. 999]
+  where
+    multiple3or5 x = any ((== 0) . mod x) [3, 5]
+
+problem1' = print $ sum $ [3, 6 .. 999] `union` [5, 10 .. 999]
+
+problem1'' = print $ sum [x | x <- [1 .. 999], x `mod` 3 == 0 || x `mod` 5 == 0]
+
+problem2 = print $ sum $ filter even $ tail $ takeWhile (<= 4_000_000) fibs
+
+problem3 = print $ last $ primeFactors 600851475143
+
+problem3' = print $ last (primeFactors' 600851475143)
+
+problem4 = print $ maximum $ filter isPalindrome $ [x * y | x <- range, y <- range]
+  where
+    range = [100 .. 999]
+
+-- problem5 = print $ head $ filter (isDivisibleByRange [1 .. 20]) [1 ..]
+problem5 = print $ foldr1 lcm [1 .. 20]
+
+problem6 = print $ squareOfSum - sumOfSquares
+  where
+    limit = 100
+    sumOfSquares = sum $ map (^ 2) [1 .. limit]
+    squareOfSum = sum [1 .. limit] ^ 2
+
+problem7 = print $ primes !! 10_000
+
+main :: IO ()
+main = problem7
