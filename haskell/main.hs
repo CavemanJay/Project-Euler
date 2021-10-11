@@ -52,5 +52,8 @@ problem14 = print $ fst $ head $ sortByCount [(x, length $ collatzSequence x) | 
     sortByCount :: [(Int, Int)] -> [(Int, Int)]
     sortByCount = sortBy (\(startA, countA) (startB, countB) -> compare countB countA)
 
+-- (:"") Converts a char to a string
+problem16 = print $ sum (map (read . (: "")) $ show (2 ^ 1000) :: [Int])
+
 main :: IO ()
-main = problem14
+main = problem16
