@@ -5,6 +5,7 @@ import Utils
   ( collatzSequence,
     digitProduct,
     digits,
+    factorial,
     fibs,
     isPalindrome,
     primeFactors,
@@ -56,5 +57,7 @@ problem14 = print $ fst $ head $ sortByCount [(x, length $ collatzSequence x) | 
 -- (:"") Converts a char to a string
 problem16 = print $ sum $ digits $ 2 ^ 1000
 
+problem20 = print $ sum $ digits $ factorial 100
+
 main :: IO ()
-main = problem16
+main = problem20
