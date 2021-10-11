@@ -48,13 +48,16 @@ factor n (p : ps)
 
 digitProduct = product . map digitToInt
 
-collatz :: Int -> Int
 collatz 1 = 1
 collatz n
   | even n = n `div` 2
   | otherwise = 3 * n + 1
 
 -- https://adamo.wordpress.com/2018/03/17/a-collatz-sequence-in-haskell/
-collatzSequence :: Int -> [Int]
 collatzSequence 1 = [1]
 collatzSequence n = n : collatzSequence (collatz n)
+
+digits :: (Integral a, Show a) => a -> [Int]
+digits n = map (read . (: "")) $ show n :: [Int]
+
+factorial n = product [1 .. n]

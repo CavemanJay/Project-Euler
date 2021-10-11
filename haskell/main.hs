@@ -4,6 +4,7 @@ import Data.List (sortBy, union)
 import Utils
   ( collatzSequence,
     digitProduct,
+    digits,
     fibs,
     isPalindrome,
     primeFactors,
@@ -53,7 +54,7 @@ problem14 = print $ fst $ head $ sortByCount [(x, length $ collatzSequence x) | 
     sortByCount = sortBy (\(startA, countA) (startB, countB) -> compare countB countA)
 
 -- (:"") Converts a char to a string
-problem16 = print $ sum (map (read . (: "")) $ show (2 ^ 1000) :: [Int])
+problem16 = print $ sum $ digits $ 2 ^ 1000
 
 main :: IO ()
 main = problem16
