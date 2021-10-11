@@ -61,3 +61,9 @@ digits :: (Integral a, Show a) => a -> [Int]
 digits n = map (read . (: "")) $ show n :: [Int]
 
 factorial n = product [1 .. n]
+
+amicable a = a == db && a /= da
+  where
+    d = sum . factorList
+    da = d a
+    db = d da

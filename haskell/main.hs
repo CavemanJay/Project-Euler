@@ -2,9 +2,11 @@
 
 import Data.List (sortBy, union)
 import Utils
-  ( collatzSequence,
+  ( amicable,
+    collatzSequence,
     digitProduct,
     digits,
+    factorList,
     factorial,
     fibs,
     isPalindrome,
@@ -59,5 +61,7 @@ problem16 = print $ sum $ digits $ 2 ^ 1000
 
 problem20 = print $ sum $ digits $ factorial 100
 
+problem21 = print $ sum $ filter amicable [1 .. 9_999]
+
 main :: IO ()
-main = problem20
+main = problem21
