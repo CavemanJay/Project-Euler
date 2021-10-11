@@ -15,6 +15,8 @@ import Utils
     primes,
   )
 
+getResourcePath = ("resources/" ++)
+
 problem1 = print $ sum $ filter multiple3or5 [1 .. 999]
   where
     multiple3or5 x = any ((== 0) . mod x) [3, 5]
@@ -46,7 +48,7 @@ problem7 = print $ primes !! 10_000
 problem10 = print $ sum $ takeWhile (< 2_000_000) primes
 
 problem13 = do
-  str <- readFile "problem13.txt"
+  str <- readFile $ getResourcePath "problem13.txt"
   print $ take 10 $ show $ sum $ map (read :: String -> Integer) $ lines str
 
 -- Slow execution but oh well
