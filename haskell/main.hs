@@ -1,8 +1,9 @@
 {-# LANGUAGE NumericUnderscores #-}
 
-import Data.List (union)
+import Data.List (sortBy, union)
 import Utils
-  ( digitProduct,
+  ( collatzSequence,
+    digitProduct,
     fibs,
     isPalindrome,
     primeFactors,
@@ -28,7 +29,6 @@ problem4 = print $ maximum $ filter isPalindrome $ [x * y | x <- range, y <- ran
   where
     range = [100 .. 999]
 
--- problem5 = print $ head $ filter (isDivisibleByRange [1 .. 20]) [1 ..]
 problem5 = print $ foldr1 lcm [1 .. 20]
 
 problem6 = print $ squareOfSum - sumOfSquares
@@ -45,5 +45,12 @@ problem13 = do
   str <- readFile "problem13.txt"
   print $ take 10 $ show $ sum $ map (read :: String -> Integer) $ lines str
 
+-- Slow execution but oh well
+problem14 = print $ fst $ head $ sortByCount [(x, length $ collatzSequence x) | x <- range]
+  where
+    range = [1 .. 999_999]
+    sortByCount :: [(Int, Int)] -> [(Int, Int)]
+    sortByCount = sortBy (\(startA, countA) (startB, countB) -> compare countB countA)
+
 main :: IO ()
-main = problem7
+main = problem14
