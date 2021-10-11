@@ -57,6 +57,7 @@ collatz n
 collatzSequence 1 = [1]
 collatzSequence n = n : collatzSequence (collatz n)
 
+-- (:"") Converts a char to a string
 digits :: (Integral a, Show a) => a -> [Int]
 digits n = map (read . (: "")) $ show n :: [Int]
 

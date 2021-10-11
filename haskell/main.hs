@@ -1,6 +1,8 @@
 {-# LANGUAGE NumericUnderscores #-}
 
-import Data.List (sortBy, union)
+import Data.Char (ord)
+import Data.List (sort, sortBy, union)
+import Data.List.Split (splitOn)
 import Utils
   ( amicable,
     collatzSequence,
@@ -58,12 +60,20 @@ problem14 = print $ fst $ head $ sortByCount [(x, length $ collatzSequence x) | 
     sortByCount :: [(Int, Int)] -> [(Int, Int)]
     sortByCount = sortBy (\(startA, countA) (startB, countB) -> compare countB countA)
 
--- (:"") Converts a char to a string
 problem16 = print $ sum $ digits $ 2 ^ 1000
 
 problem20 = print $ sum $ digits $ factorial 100
 
 problem21 = print $ sum $ filter amicable [1 .. 9_999]
 
+problem22 = do
+  file <- readFile $ getResourcePath "problem22.txt"
+  let names = zip [1..] (sort $ map unquote $ splitOn "," file)
+  print $ sum $map score names
+  where
+    unquote name = unwords $ map (filter (/= '"')) (words name)
+    score :: (Int, [Char]) -> Int
+    score name = fst name * sum (map (((* (-1)) . (64 -)) . ord) (snd name))
+
 main :: IO ()
-main = problem21
+main = problem22
