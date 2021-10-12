@@ -2,7 +2,7 @@
 
 import Control.Monad (join)
 import Data.Char (ord)
-import Data.List (find, permutations, sort, sortBy, union)
+import Data.List (find, group, permutations, sort, sortBy, union)
 import Data.List.Split (splitOn)
 import Data.Maybe (fromMaybe)
 import System.Directory.Internal.Prelude (fromMaybe)
@@ -30,7 +30,7 @@ problem1' = print $ sum $ [3, 6 .. 999] `union` [5, 10 .. 999]
 
 problem1'' = print $ sum [x | x <- [1 .. 999], x `mod` 3 == 0 || x `mod` 5 == 0]
 
-problem2 = print $ sum $ filter even $ tail $ takeWhile (<= 4_000_000) fibs
+problem2 = print $ sum $ filter even $ tail $ takeWhile (< 4_000_000) fibs
 
 problem3 = print $ last $ primeFactors 600851475143
 
@@ -86,5 +86,10 @@ problem25 = print $ fst $ fromMaybe (-1, -1) $ firstGreaterThan 1000
     firstGreaterThan n = find (\(index, x) -> n <= digitCount x) fibs'
     fibs' = zip [0 ..] fibs
 
+problem29 = print $length $ uniq $ sort $ map (uncurry (^)) $ [(x, y) | x <- range, y <- range]
+  where
+    range = [2 .. 100]
+    uniq = map head . group 
+
 main :: IO ()
-main = problem25
+main = problem29
