@@ -99,5 +99,11 @@ problem34 = print $ last $ take 2 $ scanl1 (+) $ filter isDigitFactorial [3..]
   where
     isDigitFactorial n = n == sum (map factorial $ digits n)
 
+problem36 = print $ sum $ filter isDoubleBasePalindrome [1..1_000_000]
+  where
+    bin :: Int -> [Char]
+    bin n = printf "%b" n
+    isDoubleBasePalindrome n = isPalindrome ( bin n) && isPalindrome n
+
 main :: IO ()
 main = problem34
