@@ -2,8 +2,10 @@
 
 import Control.Monad (join)
 import Data.Char (ord)
-import Data.List (permutations, sort, sortBy, union)
+import Data.List (find, permutations, sort, sortBy, union)
 import Data.List.Split (splitOn)
+import Data.Maybe (fromMaybe)
+import System.Directory.Internal.Prelude (fromMaybe)
 import Utils
   ( amicable,
     collatzSequence,
@@ -78,5 +80,11 @@ problem22 = do
 
 problem24 = print $ (!! 999_999) $ sort $ map (join . map show) $ permutations [0 .. 9]
 
+problem25 = print $ fst $ fromMaybe (-1, -1) $ firstGreaterThan 1000
+  where
+    digitCount = length . digits
+    firstGreaterThan n = find (\(index, x) -> n <= digitCount x) fibs'
+    fibs' = zip [0 ..] fibs
+
 main :: IO ()
-main = problem24
+main = problem25
