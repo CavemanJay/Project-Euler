@@ -89,7 +89,11 @@ problem25 = print $ fst $ fromMaybe (-1, -1) $ firstGreaterThan 1000
 problem29 = print $length $ uniq $ sort $ map (uncurry (^)) $ [(x, y) | x <- range, y <- range]
   where
     range = [2 .. 100]
-    uniq = map head . group 
+    uniq = map head . group
+
+problem30 = print $ sum $ take 6 $ filter (\x -> x == digitPowerSum x) [2 ..]
+  where
+    digitPowerSum = sum . map (^ 5) . digits
 
 main :: IO ()
-main = problem29
+main = problem30
