@@ -95,5 +95,9 @@ problem30 = print $ sum $ take 6 $ filter (\x -> x == digitPowerSum x) [2 ..]
   where
     digitPowerSum = sum . map (^ 5) . digits
 
+problem34 = print $ last $ take 2 $ scanl1 (+) $ filter isDigitFactorial [3..]
+  where
+    isDigitFactorial n = n == sum (map factorial $ digits n)
+
 main :: IO ()
-main = problem30
+main = problem34
