@@ -1,7 +1,8 @@
 {-# LANGUAGE NumericUnderscores #-}
 
+import Control.Monad (join)
 import Data.Char (ord)
-import Data.List (sort, sortBy, union)
+import Data.List (permutations, sort, sortBy, union)
 import Data.List.Split (splitOn)
 import Utils
   ( amicable,
@@ -68,12 +69,14 @@ problem21 = print $ sum $ filter amicable [1 .. 9_999]
 
 problem22 = do
   file <- readFile $ getResourcePath "problem22.txt"
-  let names = zip [1..] (sort $ map unquote $ splitOn "," file)
+  let names = zip [1 ..] (sort $ map unquote $ splitOn "," file)
   print $ sum $map score names
   where
     unquote name = unwords $ map (filter (/= '"')) (words name)
     score :: (Int, [Char]) -> Int
     score name = fst name * sum (map (((* (-1)) . (64 -)) . ord) (snd name))
 
+problem24 = print $ (!! 999_999) $ sort $ map (join . map show) $ permutations [0 .. 9]
+
 main :: IO ()
-main = problem22
+main = problem24
