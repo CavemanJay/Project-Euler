@@ -2,12 +2,14 @@
 
 import Control.Monad (join)
 import Data.Char (ord)
-import Data.List (find, group, permutations, sort, sortBy, union)
+import Data.List (find, group, inits, permutations, sort, sortBy, union)
 import Data.List.Split (splitOn)
 import Data.Maybe (fromMaybe)
 import System.Directory.Internal.Prelude (fromMaybe)
+import Text.Printf (printf)
 import Utils
   ( amicable,
+    circle,
     collatzSequence,
     digitProduct,
     digits,
@@ -15,6 +17,7 @@ import Utils
     factorial,
     fibs,
     isPalindrome,
+    isPrime,
     primeFactors,
     primeFactors',
     primes,
@@ -95,15 +98,23 @@ problem30 = print $ sum $ take 6 $ filter (\x -> x == digitPowerSum x) [2 ..]
   where
     digitPowerSum = sum . map (^ 5) . digits
 
-problem34 = print $ last $ take 2 $ scanl1 (+) $ filter isDigitFactorial [3..]
+problem34 = print $ last $ take 2 $ scanl1 (+) $ filter isDigitFactorial [3 ..]
   where
     isDigitFactorial n = n == sum (map factorial $ digits n)
 
-problem36 = print $ sum $ filter isDoubleBasePalindrome [1..1_000_000]
+problem36 = print $ sum $ filter isDoubleBasePalindrome [1 .. 1_000_000]
   where
     bin :: Int -> [Char]
     bin n = printf "%b" n
-    isDoubleBasePalindrome n = isPalindrome ( bin n) && isPalindrome n
+    isDoubleBasePalindrome n = isPalindrome (bin n) && isPalindrome n
+
+problem37 = print $ sum $ take 11 $ filter isTruncatablePrime [9, 11 ..]
+  where
+    rightTruncate :: (Integral a, Show a, Read a) => a -> [a]
+    rightTruncate = map read . scanl1 (++) . map show . digits
+    leftTruncate :: (Integral a, Show a, Read a) => a -> [a]
+    leftTruncate = map (read . reverse) . tail . inits . reverse . show
+    isTruncatablePrime n = all isPrime (rightTruncate n) && all isPrime (leftTruncate n)
 
 main :: IO ()
-main = problem34
+main = problem37

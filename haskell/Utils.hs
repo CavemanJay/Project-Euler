@@ -1,5 +1,6 @@
 module Utils where
 
+import Control.Monad (join)
 import Data.Bits
 import Data.Char (digitToInt)
 import Data.List
@@ -26,8 +27,10 @@ isFactorOf x n = n `mod` x == 0
 
 factorList n = filter (`isFactorOf` n) [1 .. n `div` 2]
 
+primeFactors :: (Integral a) => a -> [a]
 primeFactors = unfoldr (\n -> listToMaybe [(x, div n x) | x <- [2 .. n], mod n x == 0])
 
+isPrime :: (Integral a) => a -> Bool
 isPrime n = n > 1 && head (primeFactors n) == n
 
 isPalindrome x = reverse (show x) == show x
@@ -61,6 +64,9 @@ collatzSequence n = n : collatzSequence (collatz n)
 digits :: (Integral a, Show a) => a -> [Int]
 digits n = map (read . (: "")) $ show n :: [Int]
 
+undigits :: (Integral a, Show a) => [a] -> Int
+undigits ns = read $ join (map show ns) :: Int
+
 factorial n = product [1 .. n]
 
 amicable a = a == db && a /= da
@@ -68,3 +74,8 @@ amicable a = a == db && a /= da
     d = sum . factorList
     da = d a
     db = d da
+
+-- https://stackoverflow.com/a/11873846
+rotations xs = init (zipWith (++) (tails xs) (inits xs))
+
+circle = map undigits . rotations . digits
