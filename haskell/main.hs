@@ -8,7 +8,8 @@ import Data.Maybe (fromMaybe)
 import System.Directory.Internal.Prelude (fromMaybe)
 import Text.Printf (printf)
 import Utils
-  ( amicable,
+  ( alphabeticalScore,
+    amicable,
     circle,
     collatzSequence,
     digitProduct,
@@ -18,9 +19,11 @@ import Utils
     fibs,
     isPalindrome,
     isPrime,
+    nthTriangle,
     primeFactors,
     primeFactors',
     primes,
+    unquote,
   )
 
 getResourcePath = ("resources/" ++)
@@ -75,11 +78,10 @@ problem21 = print $ sum $ filter amicable [1 .. 9_999]
 problem22 = do
   file <- readFile $ getResourcePath "problem22.txt"
   let names = zip [1 ..] (sort $ map unquote $ splitOn "," file)
-  print $ sum $map score names
+  print $ sum $ map score names
   where
-    unquote name = unwords $ map (filter (/= '"')) (words name)
     score :: (Int, [Char]) -> Int
-    score name = fst name * sum (map (((* (-1)) . (64 -)) . ord) (snd name))
+    score s = fst s * sum (map alphabeticalScore (snd s))
 
 problem24 = print $ (!! 999_999) $ sort $ map (join . map show) $ permutations [0 .. 9]
 
@@ -116,5 +118,13 @@ problem37 = print $ sum $ take 11 $ filter isTruncatablePrime [9, 11 ..]
     leftTruncate = map (read . reverse) . tail . inits . reverse . show
     isTruncatablePrime n = all isPrime (rightTruncate n) && all isPrime (leftTruncate n)
 
+problem42 = do
+  file <- readFile $ getResourcePath "problem42.txt"
+  let words = map unquote $ splitOn "," file
+  print $ length $ filter (`elem` triangles) $ map wordScore words
+  where
+    wordScore = sum . map alphabeticalScore
+    triangles = map nthTriangle [1 .. 100]
+
 main :: IO ()
-main = problem37
+main = problem42

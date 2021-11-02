@@ -2,7 +2,7 @@ module Utils where
 
 import Control.Monad (join)
 import Data.Bits
-import Data.Char (digitToInt)
+import Data.Char (digitToInt, ord)
 import Data.List
 import Data.Maybe
 
@@ -79,3 +79,9 @@ amicable a = a == db && a /= da
 rotations xs = init (zipWith (++) (tails xs) (inits xs))
 
 circle = map undigits . rotations . digits
+
+unquote s = unwords $ map (filter (/= '"')) (words s)
+
+nthTriangle n = n * (n + 1) `div` 2
+
+alphabeticalScore = (* (-1)) . (64 -) . ord
