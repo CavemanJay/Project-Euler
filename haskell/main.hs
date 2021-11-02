@@ -91,7 +91,7 @@ problem25 = print $ fst $ fromMaybe (-1, -1) $ firstGreaterThan 1000
     firstGreaterThan n = find (\(index, x) -> n <= digitCount x) fibs'
     fibs' = zip [0 ..] fibs
 
-problem29 = print $length $ uniq $ sort $ map (uncurry (^)) $ [(x, y) | x <- range, y <- range]
+problem29 = print $ length $ uniq $ sort $ map (uncurry (^)) $ [(x, y) | x <- range, y <- range]
   where
     range = [2 .. 100]
     uniq = map head . group
@@ -126,5 +126,7 @@ problem42 = do
     wordScore = sum . map alphabeticalScore
     triangles = map nthTriangle [1 .. 100]
 
+problem48 = print $ join $ map show $ reverse $ take 10 $ reverse $ digits $ sum $ map (\x -> x ^ x) [1 .. 1000]
+
 main :: IO ()
-main = problem42
+main = problem48
