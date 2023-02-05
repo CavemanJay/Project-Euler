@@ -1,12 +1,5 @@
-use crate::utils::math::{self, DefaultMathType};
-use crate::utils::sequences;
-
-fn solution() -> DefaultMathType {
-    let n = 600851475143;
-    // *math::prime_factors(n).iter().max().unwrap()
-    let factors = math::factors(n);
-    dbg!(factors.last());
-    unimplemented!()
+fn solution(n: u64) -> u64 {
+    *primes::factors_uniq(n).iter().max().unwrap()
 }
 
 #[cfg(test)]
@@ -15,9 +8,11 @@ mod tests {
     use rstest::rstest;
 
     use super::*;
-    #[test]
-    fn solution_test() {
-        assert_eq!(solution(), 0)
+    #[rstest]
+    #[case(13195, 29)]
+    #[case(600851475143, 6857)]
+    fn solution_test(#[case] input: u64, #[case] expected: u64) {
+        assert_eq!(solution(input), expected)
     }
 
     #[test]
@@ -27,7 +22,10 @@ mod tests {
 
     #[rstest]
     #[case(13195, vec![5,7,13,29])]
-    fn prime_factors_test(#[case] input: i64, #[case] expected: Vec<DefaultMathType>) {
+    fn prime_factors_test(
+        #[case] input: i64,
+        #[case] expected: Vec<crate::utils::math::DefaultMathType>,
+    ) {
         assert_eq!(prime_factors(input), expected)
     }
 }

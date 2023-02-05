@@ -1,4 +1,4 @@
-use num::{Zero, integer::sqrt};
+use num::Zero;
 use std::ops::Rem;
 
 pub type DefaultMathType = i64;
@@ -13,7 +13,7 @@ where
 }
 
 #[inline]
-pub fn is_even(n: DefaultMathType) -> bool {
+pub const fn is_even(n: DefaultMathType) -> bool {
     n % (2 as DefaultMathType) == 0
 }
 
@@ -30,17 +30,15 @@ pub fn is_prime(n: DefaultMathType) -> bool {
 }
 
 /// Taken from: <https://gist.github.com/qolop/71ef78c394db822756d58cac9993db77>
-pub fn factors_functional(n: DefaultMathType) -> Vec<DefaultMathType> {
-    (1..n + 1)
+pub fn factors(n: DefaultMathType) -> Vec<DefaultMathType> {
+    (1..n / 2 + 1)
         .into_iter()
         .filter(|&x| n % x == 0)
         .collect::<Vec<DefaultMathType>>()
 }
 
-/// Taken from: <https://gist.github.com/qolop/71ef78c394db822756d58cac9993db77>
-pub fn factors(n: DefaultMathType) -> Vec<DefaultMathType> {
-    let step = if n % 2 == 1 { 2 } else { 1 };
-    let range = (1..sqrt(n)+1).step_by(step);
+pub fn factors_rev(n: DefaultMathType) -> impl Iterator<Item = DefaultMathType> {
+    (1..n / 2 + 1).rev().into_iter().filter(move |x| n % x == 0)
 }
 
 pub fn prime_factors(n: DefaultMathType) -> Vec<DefaultMathType> {
@@ -49,4 +47,40 @@ pub fn prime_factors(n: DefaultMathType) -> Vec<DefaultMathType> {
         .filter(|n| is_prime(**n))
         .map(ToOwned::to_owned)
         .collect()
+}
+
+pub struct FactorsIterator {
+    i: DefaultMathType,
+    n: DefaultMathType,
+}
+
+impl FactorsIterator {
+    pub fn new(n: DefaultMathType) -> Self {
+        Self { i: 0, n }
+    }
+}
+
+impl Iterator for FactorsIterator {
+    type Item = DefaultMathType;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        loop {
+            self.i += 1;
+            if self.i == self.n {
+                return None;
+            }
+            if is_multiple_of(self.n, self.i) {
+                return Some(self.i);
+            }
+        }
+    }
+}
+
+pub fn is_palindrome<T>(n: T) -> bool
+where
+    // String: From<T>,
+    T: ToString,
+{
+    let s = n.to_string();
+    s.chars().rev().collect::<String>() == s
 }
