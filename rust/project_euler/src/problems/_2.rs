@@ -1,8 +1,10 @@
-use crate::utils::math::{self, DefaultMathType};
-use crate::utils::sequences;
+use crate::utils::{
+    math::{self, DefaultMathType},
+    sequences::fibonacci::FibIterator,
+};
 
 fn solution() -> DefaultMathType {
-    sequences::FibIterator::new(1, 2)
+    FibIterator::new(1, 2)
         .take_while(|n| *n < 4_000_000)
         .filter(|n| math::is_even(*n))
         .sum()

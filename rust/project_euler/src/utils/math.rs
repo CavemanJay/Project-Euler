@@ -1,4 +1,5 @@
-use num::Zero;
+use itertools::Itertools;
+use num::{integer::Roots, Zero};
 use std::ops::Rem;
 
 pub type DefaultMathType = i64;
@@ -29,48 +30,59 @@ pub fn is_prime(n: DefaultMathType) -> bool {
     true
 }
 
-/// Taken from: <https://gist.github.com/qolop/71ef78c394db822756d58cac9993db77>
-pub fn factors(n: DefaultMathType) -> Vec<DefaultMathType> {
-    (1..n / 2 + 1)
-        .into_iter()
-        .filter(|&x| n % x == 0)
-        .collect::<Vec<DefaultMathType>>()
-}
+pub mod factors {
+    use std::{collections::HashSet, hash::Hash};
 
-pub fn factors_rev(n: DefaultMathType) -> impl Iterator<Item = DefaultMathType> {
-    (1..n / 2 + 1).rev().into_iter().filter(move |x| n % x == 0)
-}
+    use num::integer::Roots;
 
-pub fn prime_factors(n: DefaultMathType) -> Vec<DefaultMathType> {
-    factors(n)
-        .iter()
-        .filter(|n| is_prime(**n))
-        .map(ToOwned::to_owned)
-        .collect()
-}
+    use super::{is_multiple_of, is_prime, DefaultMathType};
 
-pub struct FactorsIterator {
-    i: DefaultMathType,
-    n: DefaultMathType,
-}
-
-impl FactorsIterator {
-    pub fn new(n: DefaultMathType) -> Self {
-        Self { i: 0, n }
+    /// Taken from: <https://gist.github.com/qolop/71ef78c394db822756d58cac9993db77>
+    pub fn factors(n: DefaultMathType) -> HashSet<DefaultMathType> {
+        let step = if n % 2 == 1 { 2 } else { 1 };
+        (1..n.sqrt() + 1)
+            .step_by(step)
+            .filter(|&i| n % i == 0)
+            .map(|i| [i, n / i])
+            .flatten()
+            .collect::<HashSet<DefaultMathType>>()
     }
-}
 
-impl Iterator for FactorsIterator {
-    type Item = DefaultMathType;
+    pub fn factors_rev(n: DefaultMathType) -> impl Iterator<Item = DefaultMathType> {
+        (1..n / 2 + 1).rev().into_iter().filter(move |x| n % x == 0)
+    }
 
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            self.i += 1;
-            if self.i == self.n {
-                return None;
-            }
-            if is_multiple_of(self.n, self.i) {
-                return Some(self.i);
+    pub fn prime_factors(n: DefaultMathType) -> HashSet<DefaultMathType> {
+        factors(n)
+            .iter()
+            .filter(|&&n| is_prime(n))
+            .map(ToOwned::to_owned)
+            .collect()
+    }
+
+    pub struct FactorsIterator {
+        i: DefaultMathType,
+        n: DefaultMathType,
+    }
+
+    impl FactorsIterator {
+        pub fn new(n: DefaultMathType) -> Self {
+            Self { i: 0, n }
+        }
+    }
+
+    impl Iterator for FactorsIterator {
+        type Item = DefaultMathType;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            loop {
+                self.i += 1;
+                if self.i == self.n {
+                    return None;
+                }
+                if is_multiple_of(self.n, self.i) {
+                    return Some(self.i);
+                }
             }
         }
     }

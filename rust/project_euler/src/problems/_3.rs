@@ -4,8 +4,9 @@ fn solution(n: u64) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::utils::math::prime_factors;
     use rstest::rstest;
+
+    use crate::utils::math::factors::prime_factors;
 
     use super::*;
     #[rstest]
@@ -26,6 +27,12 @@ mod tests {
         #[case] input: i64,
         #[case] expected: Vec<crate::utils::math::DefaultMathType>,
     ) {
-        assert_eq!(prime_factors(input), expected)
+        let p_factors = prime_factors(input);
+        assert_eq!(
+            p_factors,
+            expected
+                .into_iter()
+                .collect::<std::collections::HashSet<_>>()
+        )
     }
 }

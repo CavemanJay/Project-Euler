@@ -6,6 +6,8 @@ type Output = u64;
 type Input = usize;
 
 const WINDOW_SIZE: usize = 4;
+const COLS: usize = 20;
+const ROWS: usize = 20;
 const DATA: &str = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -46,21 +48,37 @@ fn solution(n: Input) -> Output {
             .collect_vec()
             .join(&0)
     };
-    let calc_diag = |v: Vec<Vec<Output>>| {};
+    let calc_diag = |v: &Vec<Vec<Output>>| {
+        let mut res = Vec::with_capacity(200);
+        for r in 0..ROWS - WINDOW_SIZE {
+            for c in 0..COLS - WINDOW_SIZE {
+                res.push(v[r][c] * v[r + 1][c + 1] * v[r + 2][c + 2] * v[r + 3][c + 3])
+            }
+        }
+        res
+    };
     let right = calc_right(&data);
-    let down = calc_right(&transpose(data));
-    // dbg!(right);
+    let down = calc_right(&transpose(&data));
+    let diag_right = calc_diag(&data);
+    let diag_left = calc_diag(&transpose(&data));
+    // dbg!(diag_right.iter().filter(|&&x| x == 1788696).collect_vec());
+    let mut all = vec![];
+    all.extend(right);
+    all.extend(down);
+    all.extend(diag_right);
+    all.extend(diag_left);
+    dbg!(all.iter().max());
     unimplemented!()
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use rstest::rstest;
-    #[rstest]
-    #[case(10, 23)]
-    #[case(1000, 233168)]
-    fn solution_test(#[case] input: Input, #[case] expected: Output) {
-        assert_eq!(solution(input), expected)
-    }
-}
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+//     use rstest::rstest;
+//     #[rstest]
+//     #[case(10, 23)]
+//     #[case(1000, 233168)]
+//     fn solution_test(#[case] input: Input, #[case] expected: Output) {
+//         assert_eq!(solution(input), expected)
+//     }
+// }

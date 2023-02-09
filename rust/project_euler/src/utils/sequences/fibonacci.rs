@@ -1,4 +1,4 @@
-use super::math::DefaultMathType;
+use crate::utils::math::DefaultMathType;
 
 /// Taken from: <https://www.umcconnell.net/posts/2021-03-13-fibonacci-rust/#1-standard>
 pub fn fib(n: DefaultMathType) -> DefaultMathType {
