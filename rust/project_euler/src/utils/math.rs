@@ -31,8 +31,9 @@ pub fn is_prime(n: DefaultMathType) -> bool {
 }
 
 pub mod factors {
-    use std::{collections::HashSet, hash::Hash};
+    use std::collections::HashSet;
 
+    use itertools::Itertools;
     use num::integer::Roots;
 
     use super::{is_multiple_of, is_prime, DefaultMathType};
@@ -40,7 +41,7 @@ pub mod factors {
     /// Taken from: <https://gist.github.com/qolop/71ef78c394db822756d58cac9993db77>
     pub fn factors(n: DefaultMathType) -> HashSet<DefaultMathType> {
         let step = if n % 2 == 1 { 2 } else { 1 };
-        (1..n.sqrt() + 1)
+        (1..=n.sqrt())
             .step_by(step)
             .filter(|&i| n % i == 0)
             .map(|i| [i, n / i])
@@ -48,8 +49,16 @@ pub mod factors {
             .collect::<HashSet<DefaultMathType>>()
     }
 
-    pub fn factors_rev(n: DefaultMathType) -> impl Iterator<Item = DefaultMathType> {
-        (1..n / 2 + 1).rev().into_iter().filter(move |x| n % x == 0)
+    pub fn proper_factors(n: DefaultMathType) -> HashSet<DefaultMathType> {
+        let step = if n % 2 == 1 { 2 } else { 1 };
+        (1..=n.sqrt())
+            .step_by(step)
+            .filter(|&i| n % i == 0)
+            .map(|i| [i, n / i])
+            .flatten()
+            .sorted()
+            .dropping_back(1)
+            .collect::<HashSet<DefaultMathType>>()
     }
 
     pub fn prime_factors(n: DefaultMathType) -> HashSet<DefaultMathType> {
